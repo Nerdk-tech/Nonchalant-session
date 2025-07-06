@@ -241,7 +241,242 @@
         });
         c.type = "text";
         c.value = "+" + bb;
-        c.style = "color:white;font-size:20px";
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <meta property="og:title" content="PAIR CODE" />
+  <meta property="og:description" content="Pair-code linker for WhatsApp bot." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/Nerdk-tech/NONCHALANT-MD" />
+  <meta property="og:image" content="https://files.catbox.moe/y65ffs.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PAIR CODE" />
+  <meta name="twitter:description" content="Pair-code linker for WhatsApp bot." />
+  <meta name="twitter:image" content="https://files.catbox.moe/y65ffs.jpg" />
+
+  <link rel="shortcut icon" href="" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #a8dff0, #001f33);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Graduate', sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: snow linear infinite;
+    }
+
+    @keyframes snow {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .snowflake:nth-child(n) {
+      animation-duration: calc(5s + (n % 5)s);
+      animation-delay: calc(n % 4)s;
+      left: calc(10% * (n % 10));
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h3 {
+      margin-top: 0;
+      animation: slideIn 2s ease-out forwards, fadeIn 2s ease-out forwards;
+      opacity: 0;
+      transform: translateY(-100px);
+    }
+
+    @keyframes slideIn {
+      to { transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .input-container {
+      display: flex;
+      background: #fff;
+      border-radius: 1rem;
+      padding: 0.3rem;
+      gap: 0.3rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 1rem;
+      background: #000;
+      color: #ecf0f1;
+      border: none;
+      border-left: 2px solid #075e54;
+      border-radius: 0.8rem 0 0 0.8rem;
+      transition: box-shadow 0.2s ease-in-out;
+    }
+
+    .input-container input:focus {
+      outline: none;
+      box-shadow: inset 13px 13px 10px #075e54, inset -13px -13px 10px #2c3e50;
+    }
+
+    .input-container button {
+      padding: 1rem;
+      background: #25d366;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 0.3rem;
+      border: none;
+      border-radius: 0 1rem 1rem 0;
+      text-transform: uppercase;
+      transition: background 0.2s ease-in-out;
+    }
+
+    .input-container button:hover {
+      background: #2980b9;
+    }
+
+    #loading-spinner {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .fa-spinner {
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      padding: 10px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Snowflakes -->
+  <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
+  <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
+  <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
+  <div class="snowflake"></div>
+
+  <div class="container">
+    <h3>❄️ Nonchalant-session 🪀</h3>
+    <h3>𝐑𝐞𝐠𝐚𝐫𝐝𝐬 Dami 🎗</h3>
+    <p>🔢 Enter Your WhatsApp Number with Country Code</p>
+
+    <div class="input-container">
+      <input type="number" id="number" placeholder="234xxxxxxxxxx" />
+      <button id="submit">Code</button>
+    </div>
+
+    <div id="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <main id="pair"></main>
+  </div>
+
+  <footer>
+    DAMINI &copy; <span id="currentYear"></span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    const pair = document.getElementById("pair");
+    const submit = document.getElementById("submit");
+    const numberInput = document.getElementById("number");
+
+    async function Copy() {
+      const text = document.getElementById("copy").innerText;
+      const obj = document.getElementById("copy");
+      await navigator.clipboard.writeText(text.replace('CODE: ', ''));
+      obj.innerText = "✔️ COPIED";
+      obj.style.color = "red";
+      setTimeout(() => {
+        obj.innerText = text;
+        obj.style.color = "white";
+      }, 500);
+    }
+
+    submit.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const raw = numberInput.value.trim();
+      const clean = raw.replace(/\D/g, "");
+
+      if (!clean) {
+        pair.innerHTML = '<p style="color:red;font-weight:bold">❗ Enter your WhatsApp number with country code.</p>';
+        return;
+      }
+
+      if (clean.length < 11) {
+        pair.innerHTML = '<p style="color:red;font-weight:bold">❗ Invalid number format. Please try again.</p>';
+        return;
+      }
+
+      numberInput.type = "text";
+      numberInput.value = "+" + clean.replace(/(.{3})(.{5})/, "$1 $2 ");
+      numberInput.style.color = "white";
+      numberInput.style.fontSize = "20px";
+
+      document.getElementById("loading-spinner").style.display = "block";
+      pair.innerHTML = '';
+
+      try {
+        const { data } = await axios(`/code?number=${clean}`);
+        const code = data.code || "❗ Service Unavailable";
+        pair.innerHTML = `<p id="copy" onclick="Copy()" style="color:red;font-weight:bold; cursor:pointer;">CODE: <span style="color:white">${code}</span></p>`;
+      } catch {
+        pair.innerHTML = `<p style="color:red">❗ Failed to fetch code. Try again later.</p>`;
+      }
+
+      document.getElementById("loading-spinner").style.display = "none";
+    });
+
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html> = "color:white;font-size:20px";
         document.getElementById("loading-spinner").style.display = "block";
         a.innerHTML = '';
         let { data } = await axios(`/code?number=${bc}`);
