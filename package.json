@@ -1,9 +1,6 @@
 {
   "name": "nonchalant-session",
   "version": "1.0.0",
-  "description": "{
-  "name": "nonchalant-session",
-  "version": "1.0.0",
   "main": "pair.js",
   "scripts": {
     "start": "node pair.js"
@@ -11,17 +8,5 @@
   "dependencies": {
     "express": "^4.18.2",
     "@whiskeysockets/baileys": "^6.8.8"
-  }
-} Bot Session Generator with Pairing Code",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "engines": {
-    "node": "18.x"
-  },
-  "dependencies": {
-    "@whiskeysockets/baileys": "^6.8.8",
-    "express": "^4.18.2"
   }
 }
