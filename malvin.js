@@ -4,28 +4,39 @@ const path = require('path');
 const bodyParser = require("body-parser");
 require('events').EventEmitter.defaultMaxListeners = 500;
 
-const PORT = process.env.PORT || 8000;
+// Setup paths
+const __path = process.cwd();
 
-// ✅ FIX: only require './pair' after it's exporting a function, not an object
-const code = require('./pair'); // pair.js must export a router function!
+// Routers (both exporting express.Router instances)
+const server = require('./qr');
+const code = require('./pair');
 
-// ✅ Middleware setup
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// ✅ Attach code route (make sure pair.js uses module.exports = router)
-app.use('/code', code);
+// Routers
+app.use('/server', server); // GET /server for QR
+app.use('/code', code);     // POST /code for pairing
 
-// ✅ Serve the frontend page (pair.html)
-app.use('/', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'pair.html'));
+// Pages
+app.use('/pair', (req, res) => {
+  res.sendFile(path.join(__path, 'pair.html'));
+});
+app.use('/qr', (req, res) => {
+  res.sendFile(path.join(__path, 'qr.html'));
+});
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__path, 'main.html'));
 });
 
+// Server
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`
-✅ Deployment Successful!
-
-🔌 Session-Server Running on http://localhost:` + PORT)
+✅ Server running on http://localhost:${PORT}
+⭐ Don't forget to give a star on GitHub: github.com/Nerdk-tech/NONCHALANT-MD
+  `);
 });
 
 module.exports = app;
