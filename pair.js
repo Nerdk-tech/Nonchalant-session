@@ -1,29 +1,36 @@
 const express = require('express');
-const app = express();
-__path = process.cwd()
-const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 8000;
-let server = require('./qr'),
-    code = require('./pair');
-require('events').EventEmitter.defaultMaxListeners = 500;
-app.use('/server', server);
-app.use('/code', code);
-app.use('/pair',async (req, res, next) => {
-res.sendFile(__path + '/pair.html')
-})
-app.use('/qr',async (req, res, next) => {
-res.sendFile(__path + '/qr.html')
-})
-app.use('/',async (req, res, next) => {
-res.sendFile(__path + '/main.html')
-})
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.listen(PORT, () => {
-    console.log(`
-Don't Forgot To Give Star DAMI-XD 
+const path = require('path');
+const fs = require('fs');
+const {
+  makeWASocket,
+  useMultiFileAuthState,
+  fetchLatestBaileysVersion
+} = require('@whiskeysockets/baileys');
 
- Server running on http://localhost:` + PORT)
-})
+const router = express.Router();
 
-module.exports = app
+router.post('/', async (req, res) => {
+  const phone = req.body.phone;
+  if (!phone) return res.status(400).send({ error: 'Phone number is required' });
+
+  const sessionPath = path.join(__dirname, 'sessions', phone);
+  const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
+  const { version } = await fetchLatestBaileysVersion();
+
+  const sock = makeWASocket({
+    auth: state,
+    version,
+    printQRInTerminal: false,
+    browser: ['Nonchalant', 'Chrome', '1.0'],
+  });
+
+  sock.ev.on('connection.update', async ({ pairingCode }) => {
+    if (pairingCode) {
+      res.json({ pairingCode });
+    }
+  });
+
+  sock.ev.on('creds.update', saveCreds);
+});
+
+module.exports = router;
