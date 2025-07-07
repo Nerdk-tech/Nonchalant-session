@@ -1,22 +1,31 @@
 const express = require('express');
 const app = express();
-__path = process.cwd()
+const path = require('path');
 const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 8000;
-let code = require('./pair');
 require('events').EventEmitter.defaultMaxListeners = 500;
-app.use('/code', code);
-app.use('/',async (req, res, next) => {
-res.sendFile(__path + '/pair.html')
-});
+
+const PORT = process.env.PORT || 8000;
+
+// ✅ FIX: only require './pair' after it's exporting a function, not an object
+const code = require('./pair'); // pair.js must export a router function!
+
+// ✅ Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// ✅ Attach code route (make sure pair.js uses module.exports = router)
+app.use('/code', code);
+
+// ✅ Serve the frontend page (pair.html)
+app.use('/', async (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'pair.html'));
+});
+
 app.listen(PORT, () => {
-    console.log(`
-Deployment Successful!
+  console.log(`
+✅ Deployment Successful!
 
- Session-Server Running on http://localhost:` + PORT)
-})
+🔌 Session-Server Running on http://localhost:` + PORT)
+});
 
-module.exports = app
-       
+module.exports = app;
